@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư Gửi Mẹ</title>
+    <style>
+        body {
+            font-family: 'Dancing Script', cursive;
+            text-align: center;
+            background: pink;
+            color: #6d0f0f;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        @keyframes floating {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-100vh); opacity: 0; }
+        }
+        .heart {
+            position: absolute;
+            bottom: 0;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            clip-path: path('M10 30 L20 10 A10 10 0 1 1 0 10 L10 30');
+            animation: floating 5s linear infinite;
+        }
+        .message {
+            max-width: 900px;
+            font-size: 1.8em;
+            line-height: 1.8;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 30px;
+            border-radius: 15px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-weight: bold;
+        }
+        .arrow {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2em;
+            cursor: pointer;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        audio {
+            display: none;
+        }
+        .play-button {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .video-container {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button class="play-button" onclick="playMusic()">Nhấn để bật nhạc 🎵</button>
+    <div class="message">
+        <h1>Kính gửi mẹ yêu quý,</h1>
+        <p>Con hy vọng bức thư này sẽ mang đến cho Mẹ một chút niềm vui và hạnh phúc. Như mẹ đã thấy, thường ngày con vốn không hay nói ra những lời nói tình cảm với mẹ, nhưng hôm nay con muốn dành một chút thời gian để nói ra những điều con cảm nhận được từ mẹ và bày tỏ lòng biết ơn, tình yêu của con dành cho Mẹ.</p>
+        <p>Mẹ ơi, con biết rằng Mẹ đã hy sinh rất nhiều cho con. Từ những ngày còn nhỏ, Mẹ đã luôn ở bên, chăm sóc và dạy dỗ từng bước đi. Những kỷ niệm bên Mẹ, từ những bữa cơm gia đình ấm cúng đến những buổi tối nằm trò chuyện cùng mẹ trước khi ngủ, đều là những khoảnh khắc quý giá mà con sẽ mãi trân trọng.</p>
+        <p>Con cảm thấy may mắn khi có Mẹ là mẹ của con. Mẹ không chỉ là người sinh ra con, mà còn là bạn, người thầy và là nguồn động viên lớn nhất trong cuộc đời con. Mẹ luôn tin tưởng vào con, ngay cả khi con gặp khó khăn. Sự cứng rắn và tình yêu vô bờ bến của Mẹ đã giúp con vượt qua nhiều thử thách.</p>
+        <p>Con muốn Mẹ biết rằng, dù cuộc sống bận rộn đến đâu, con sẽ luôn nhớ về Mẹ và những gì Mẹ đã làm cho con. Con sẽ cố gắng trở thành một người tốt, xứng đáng với tình yêu mà Mẹ đã dành cho con.</p>
+        <p>Cuối cùng, con chỉ muốn nói rằng con yêu Mẹ rất nhiều. Mẹ là ánh sáng trong cuộc đời con, và con sẽ luôn trân trọng từng khoảnh khắc bên Mẹ.</p>
+        <h2>Chúc Mẹ luôn khỏe mạnh và hạnh phúc!</h2>
+        <p>Yêu Mẹ, má Ba</p>
+    </div>
+    <div class="arrow" onclick="showVideo()">⬇️</div>
+    <div class="video-container" id="video-container">
+        <video controls width="600">
+            <source src="6351767571753.mp4" type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ phát video.
+        </video>
+    </div>
+    <audio id="background-music" loop>
+        <source src="yêu bền bỉ.mp4" type="audio/mp4">
+    </audio>
+    <script>
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+        
+        function playMusic() {
+            const audio = document.getElementById("background-music");
+            audio.volume = 1.0;
+            audio.play();
+            document.querySelector(".play-button").style.display = "none";
+        }
+        
+        function showVideo() {
+            document.getElementById("video-container").style.display = "block";
+        }
+    </script>
+</body>
+</html>
