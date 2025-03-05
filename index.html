@@ -22,43 +22,28 @@
             position: absolute;
             width: 100%;
             height: 100%;
+            cursor: pointer;
         }
         .video-container {
             display: none;
             margin-top: 20px;
         }
-        .heart-button {
+        .heart-text {
             position: absolute;
-            bottom: 20px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 100px;
-            background-color: red;
-            clip-path: path('M50 90 L90 40 A30 30 0 1 1 10 40 L50 90');
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            transform: translate(-50%, -50%);
             color: white;
-            font-size: 1em;
+            font-size: 1.5em;
             font-weight: bold;
-            cursor: pointer;
-            animation: heartbeat 1.5s infinite;
-        }
-        
-        @keyframes heartbeat {
-            0% { transform: translateX(-50%) scale(1); }
-            30% { transform: translateX(-50%) scale(1.2); }
-            60% { transform: translateX(-50%) scale(0.9); }
-            100% { transform: translateX(-50%) scale(1); }
+            pointer-events: none;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <canvas id="pinkboard"></canvas>
-    <button class="play-button" onclick="playMusic()">Nhấn để bật nhạc 🎵</button>
-    <div class="heart-button" onclick="showVideo()">Hãy ấn vào trái tim này nhé</div>
+    <canvas id="pinkboard" onclick="showVideo()"></canvas>
+    <div class="heart-text">Hãy ấn vào trái tim nhé</div>
     <div class="video-container" id="video-container">
         <video controls width="600">
             <source src="6351767571753.mp4" type="video/mp4">
@@ -69,17 +54,9 @@
         <source src="yêu bền bỉ.mp3" type="audio/mp3">
     </audio>
     <script>
-        function playMusic() {
-            const audio = document.getElementById("background-music");
-            audio.volume = 1.0;
-            audio.play();
-            document.querySelector(".play-button").style.display = "none";
-        }
-        
         function showVideo() {
             document.getElementById("video-container").style.display = "block";
         }
-        
         (function (canvas) {
             var context = canvas.getContext("2d");
             function drawHeart() {
@@ -94,7 +71,6 @@
                 context.closePath();
                 context.fill();
             }
-            
             function animateHeart() {
                 let scale = 1;
                 let growing = true;
@@ -121,4 +97,5 @@
     </script>
 </body>
 </html>
+
 
