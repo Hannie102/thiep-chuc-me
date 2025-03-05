@@ -26,7 +26,13 @@
         }
         .video-container {
             display: none;
-            margin-top: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
         }
         .heart-text {
             position: absolute;
@@ -42,8 +48,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <canvas id="pinkboard" onclick="showVideo()"></canvas>
-    <div class="heart-text">Hãy ấn vào trái tim nhé</div>
+    <div id="heart-container">
+        <canvas id="pinkboard"></canvas>
+        <div class="heart-text">Hãy ấn vào trái tim nhé</div>
+    </div>
     <div class="video-container" id="video-container">
         <video controls width="600">
             <source src="6351767571753.mp4" type="video/mp4">
@@ -54,9 +62,10 @@
         <source src="yêu bền bỉ.mp3" type="audio/mp3">
     </audio>
     <script>
-        function showVideo() {
+        document.getElementById("heart-container").addEventListener("click", function() {
             document.getElementById("video-container").style.display = "block";
-        }
+        });
+        
         (function (canvas) {
             var context = canvas.getContext("2d");
             function drawHeart() {
