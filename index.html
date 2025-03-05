@@ -43,6 +43,14 @@
             font-size: 1em;
             font-weight: bold;
             cursor: pointer;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: translateX(-50%) scale(1); }
+            30% { transform: translateX(-50%) scale(1.2); }
+            60% { transform: translateX(-50%) scale(0.9); }
+            100% { transform: translateX(-50%) scale(1); }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
@@ -73,51 +81,33 @@
         }
         
         (function (canvas) {
-            var context = canvas.getContext("2d"),
-                particles = [],
-                particleRate = 100;
-            
-            function pointOnHeart(t) {
-                return {
-                    x: 160 * Math.pow(Math.sin(t), 3),
-                    y: 130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25
-                };
-            }
-            
-            function createParticle() {
-                var t = Math.PI - 2 * Math.PI * Math.random();
-                var pos = pointOnHeart(t);
-                particles.push({ x: canvas.width / 2 + pos.x, y: canvas.height / 2 - pos.y, age: 0 });
-            }
-            
-            function updateParticles() {
-                for (var i = 0; i < particles.length; i++) {
-                    particles[i].y -= 1;
-                    particles[i].age += 0.01;
-                    if (particles[i].age > 1) {
-                        particles.splice(i, 1);
-                        i--;
-                    }
-                }
-            }
-            
-            function drawParticles() {
+            var context = canvas.getContext("2d");
+            function drawHeart() {
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 context.fillStyle = "#FF5CA4";
-                for (var i = 0; i < particles.length; i++) {
-                    context.beginPath();
-                    context.arc(particles[i].x, particles[i].y, 5, 0, Math.PI * 2);
-                    context.fill();
+                context.beginPath();
+                for (let t = -Math.PI; t < Math.PI; t += 0.01) {
+                    let x = 160 * Math.pow(Math.sin(t), 3);
+                    let y = 130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25;
+                    context.lineTo(canvas.width / 2 + x, canvas.height / 2 - y);
                 }
+                context.closePath();
+                context.fill();
             }
             
-            function render() {
-                requestAnimationFrame(render);
-                createParticle();
-                updateParticles();
-                drawParticles();
+            function animateHeart() {
+                let scale = 1;
+                let growing = true;
+                function step() {
+                    requestAnimationFrame(step);
+                    context.setTransform(scale, 0, 0, scale, canvas.width / 2 * (1 - scale), canvas.height / 2 * (1 - scale));
+                    drawHeart();
+                    scale += growing ? 0.01 : -0.01;
+                    if (scale >= 1.2) growing = false;
+                    if (scale <= 1) growing = true;
+                }
+                step();
             }
-            
             function onResize() {
                 canvas.width = canvas.clientWidth;
                 canvas.height = canvas.clientHeight;
@@ -125,9 +115,10 @@
             window.onresize = onResize;
             setTimeout(function () {
                 onResize();
-                render();
+                animateHeart();
             }, 10);
         })(document.getElementById("pinkboard"));
     </script>
 </body>
 </html>
+
