@@ -18,10 +18,19 @@
             position: relative;
             overflow: hidden;
         }
-        canvas {
+        #heart-container {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        canvas {
+            width: 200px;
+            height: 200px;
             cursor: pointer;
         }
         .video-container {
@@ -35,10 +44,7 @@
             border-radius: 10px;
         }
         .heart-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            margin-top: 10px;
             color: white;
             font-size: 1.5em;
             font-weight: bold;
@@ -73,8 +79,8 @@
                 context.fillStyle = "#FF5CA4";
                 context.beginPath();
                 for (let t = -Math.PI; t < Math.PI; t += 0.01) {
-                    let x = 160 * Math.pow(Math.sin(t), 3);
-                    let y = 130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25;
+                    let x = 80 * Math.pow(Math.sin(t), 3);
+                    let y = 65 * Math.cos(t) - 25 * Math.cos(2 * t) - 10 * Math.cos(3 * t) - 5 * Math.cos(4 * t) + 12;
                     context.lineTo(canvas.width / 2 + x, canvas.height / 2 - y);
                 }
                 context.closePath();
@@ -94,8 +100,8 @@
                 step();
             }
             function onResize() {
-                canvas.width = canvas.clientWidth;
-                canvas.height = canvas.clientHeight;
+                canvas.width = 200;
+                canvas.height = 200;
             }
             window.onresize = onResize;
             setTimeout(function () {
@@ -106,5 +112,6 @@
     </script>
 </body>
 </html>
+
 
 
